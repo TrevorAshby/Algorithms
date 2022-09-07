@@ -1,0 +1,52 @@
+
+
+PQ Implementations:
+Array:
+	array of size |V|
+	indexed by node number, key is the array element value, distance for our current situation
+
+D-ary Heap: (binary heap)
+	complete D-ary tree (binary common)
+	special constraint: the key value of any node of the tree is less than or equal to that of its children.
+	thus minimum node is always at the top of the tree
+	Insert:  Put new key at next available tree spot (bottom rightmost).  Let it "bubble up" tree path, swapping with the node above, until it gets to its proper spot.  logdV time to "bubble up"
+	Delete-min: Pulls off top and replaces it with last (rightmost) node of tree and then "sift down" (with smallest) to its proper spot – dlogdV time to "sift down" since have to sort on d sub-nodes at each level to find min to bring up, note that total is O(logV) once we set d
+	Decrease-key: same "bubble-up" as Insert, logd(V) if maintain separate index into the heap to get to the right element, else O(V)
+
+
+
+
+
+#G = graph, directed or undirected
+#l = positive edge lengths
+#s = starting position
+#output: for all vertices u reachable from s, dist(u) is set to the distance from s to u.
+dijkstra(G,l,s)
+	#set all lengths as infinity
+	for all u in V:
+		dist(u) = infinity
+		prev(u) = nil
+	#set start distance as 0
+	dist(s) = 0
+	
+	H = makequeue(V) #using dist-values as keys)
+	while H is not empty:
+		u = deletemin(H)
+		for all edges (u,v) in E:
+			if (dist(v) > dist(u) + l(u,v):
+				dist(v) = dist(u) + l(u,v)
+				prev(v) = u
+				decreasekey(H,v)
+----------------------------------------------------------------				
+DijkstraFlowWithInsertAndGoal():				
+	while Queue not empty:
+		u = deletemin()
+		if u = g then break()
+		for each edge (u,v):
+			if dist(v) = infinity (i.e. not visited):
+				insert(v, dist(u) + len(u,v))
+				prev(v) = u
+			else if dist(v) > dist(u) + len(u,v):
+				dist(v) = dist(u) + len(u,v)
+				decreasekey(v, dist(u) + len(u,v)
+				prev(v) = u
